@@ -29,6 +29,9 @@ This software is a Linux/SDL emulator for Soviet (russian) Electronica BK series
 
 You may read more about the series at http://en.wikipedia.org/wiki/Electronika_BK
 
+The author's (Leonid A. Broukhis) page can be found at http://www.mailcom.com/bk0010/index_en.shtml . Unfortunately the
+website appears abandoned and the link to source code for this project is broken.
+
 Additionally, it supports emulation of Terak 8510/a, which is a 1976 american PDP-11/03 platform and of which
 the Electronica BK series are indeed clones.
 
