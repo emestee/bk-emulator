@@ -1,0 +1,9 @@
+bk
+bin/
+*.o
+terakdisk
+maketape
+readtape
+pngtorba
+irps.log
+everything

@@ -1,0 +1,1049 @@
+# Russian translation of BK emulator.
+# This file is distributed under the same license as the BK package.
+# Вячеслав Диконов <sdiconov@mail.ru>, 2003.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: bk 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-05-13 09:37-0700\n"
+"PO-Revision-Date: 2003-09-28 14:22+0400\n"
+"Last-Translator: slava <sdiconov@mail.ru>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../access.c:233
+#, c-format
+msgid "Illegal read address %06o:"
+msgstr "Недопустимый адрес чтения: %06o;"
+
+#: ../access.c:356
+#, fuzzy, c-format
+msgid "@%06o Illegal write address %06o:"
+msgstr "Недопустимый адрес записи: %06o;"
+
+#: ../access.c:437
+#, c-format
+msgid "Illegal byte write address %06o:"
+msgstr "Недопустимый адрес записи байта: %06o;"
+
+#: ../access.c:514
+#, c-format
+msgid "Writing to ROM addr %06o:"
+msgstr "Запись в ПЗУ по адресу %06o:"
+
+#: ../access.c:519
+#, c-format
+msgid "Writing byte to ROM addr %06o:"
+msgstr "Запись байта в ПЗУ по адресу %06o:"
+
+#: ../boot.c:49 ../boot.c:93
+#, c-format
+msgid "No memory\n"
+msgstr "Нет памяти\n"
+
+#: ../boot.c:57 ../boot.c:101
+#, c-format
+msgid "Loading %s..."
+msgstr "Загрузка %s..."
+
+#: ../boot.c:61 ../boot.c:105
+#, c-format
+msgid "Couldn't open file.\n"
+msgstr "Невозможно открыть файл.\n"
+
+#: ../boot.c:74 ../boot.c:118
+#, c-format
+msgid "Incomplete or damaged file.\n"
+msgstr "Повреждённый или неполный файл.\n"
+
+#: ../boot.c:79 ../boot.c:123 ../sound.c:123
+#, c-format
+msgid "Done.\n"
+msgstr "Завершено.\n"
+
+#: ../conf.c:74
+#, c-format
+msgid "Bad configuration line: %s\n"
+msgstr ""
+
+#: ../conf.c:83
+#, c-format
+msgid "String value for %s is required\n"
+msgstr ""
+
+#: ../conf.c:98
+#, c-format
+msgid "Integer value for %s is required\n"
+msgstr ""
+
+#: ../conf.c:105
+#, c-format
+msgid "Value of %s must be in range [%d:%d]\n"
+msgstr ""
+
+#: ../conf.c:119
+#, c-format
+msgid "Boolean value for %s is required\n"
+msgstr ""
+
+#: ../conf.c:140
+#, c-format
+msgid "Boolean value for %s is required (got %c)\n"
+msgstr ""
+
+#: ../conf.c:148
+#, c-format
+msgid "Unknown attribute %s\n"
+msgstr ""
+
+#: ../conf.c:152
+#, c-format
+msgid "There were %d errors in the configuration file, aborting.\n"
+msgstr ""
+
+#: ../disas.c:220
+#, c-format
+msgid "ERROR code %c"
+msgstr "ОШИБКА %c"
+
+#: ../disk.c:46
+#, c-format
+msgid "%s is not an integer number of blocks, truncating\n"
+msgstr ""
+
+#: ../disk.c:55
+#, c-format
+msgid "%s will be read only\n"
+msgstr "%s будет доступен только для чтения\n"
+
+#: ../disk.c:161
+#, c-format
+msgid "Reading 177130, returned 0\n"
+msgstr "Чтение регистра 177130, результат 0\n"
+
+#: ../disk.c:191
+#, c-format
+msgid "Reading 177132 when no I/O is progress?\n"
+msgstr "Чтение регистра 177132 без активного ввода/вывода?\n"
+
+#. Print a message if something other than turning
+#. * all drives off is requested
+#.
+#: ../disk.c:209
+#, c-format
+msgid "Writing 177130, data %06o\n"
+msgstr "Запись байта %06o в регистр 177130\n"
+
+#: ../disk.c:225
+#, c-format
+msgid "Writing 177132, data %06o\n"
+msgstr "Запись %06o в регистр 177132\n"
+
+#: ../disk.c:236
+#, c-format
+msgid "Writing byte 177130, data %03o\n"
+msgstr "Запись байта %03o в регистр 177130\n"
+
+#: ../disk.c:239
+#, c-format
+msgid "Writing byte 177131, data %03o\n"
+msgstr "Запись байта %03o в регистр 177131\n"
+
+#: ../disk.c:242
+#, c-format
+msgid "Writing byte 177132, data %03o\n"
+msgstr "Запись байта %03o в регистр 177132\n"
+
+#: ../disk.c:245
+#, c-format
+msgid "Writing byte 177133, data %03o\n"
+msgstr "Запись байта %03o в регистр 177133\n"
+
+#: ../disk.c:289
+#, c-format
+msgid "%s block %d (%d words) from drive %d @ addr %06o\n"
+msgstr "%s блок %d (%d слов) с устройства %d по адресу %06o\n"
+
+#: ../disk.c:290
+msgid "Writing"
+msgstr "Запись"
+
+#: ../disk.c:290
+msgid "Reading"
+msgstr "Чтение"
+
+#: ../disk.c:295
+#, c-format
+msgid "Disk not ready\n"
+msgstr "Нет готовности дисковода\n"
+
+#: ../disk.c:298
+#, fuzzy, c-format
+msgid "Block number %d too large for image size %d\n"
+msgstr "Слишком большой номер блока\n"
+
+#: ../disk.c:308
+#, c-format
+msgid "Read failure @ %06o\n"
+msgstr "Ошибка чтения адреса %06o\n"
+
+#: ../disk.c:323
+#, c-format
+msgid "Write failure @ %06o\n"
+msgstr "Ошибка записи адреса %06o\n"
+
+#: ../disk.c:332
+#, fuzzy, c-format
+msgid "Disk is read-only\n"
+msgstr "Нет готовности дисковода\n"
+
+#: ../disk.c:340
+#, c-format
+msgid "Done\n"
+msgstr "Завершено\n"
+
+#: ../main.c:116
+#, c-format
+msgid "Usage: %s [options]\n"
+msgstr "Использование: %s [параметры]\n"
+
+#: ../main.c:117
+#, c-format
+msgid "   -0        BK-0010\n"
+msgstr "   -0        БК-0010\n"
+
+#: ../main.c:118
+#, c-format
+msgid "   -1        BK-0010.01\n"
+msgstr "   -0        БК-0010.01\n"
+
+#: ../main.c:119
+#, c-format
+msgid "   -2        BK-0010.01 + FDD\n"
+msgstr "   -0        БК-0010.01 + НГМД\n"
+
+#: ../main.c:120
+#, c-format
+msgid "   -3        BK-0011M + FDD\n"
+msgstr "   -3        БК-0011М + НГМД\n"
+
+#: ../main.c:121
+#, fuzzy, c-format
+msgid "   -K        Terak 8510/a\n"
+msgstr "   -t        Режим трассировки\n"
+
+#: ../main.c:122
+#, c-format
+msgid "   -A<file>  A: floppy image file or device (instead of %s)\n"
+msgstr "   -A<файл>  Образ дискеты или устройство A: (вместо %s)\n"
+
+#: ../main.c:123
+#, c-format
+msgid "   -B<file>  B: floppy image file or device (instead of %s)\n"
+msgstr "   -B<файл>  Образ дискеты или устройство B: (вместо %s)\n"
+
+#: ../main.c:124
+#, c-format
+msgid "   -C<file>  C: floppy image file or device (instead of %s)\n"
+msgstr "   -C<файл>  Образ дискеты или устройство C: (вместо %s)\n"
+
+#: ../main.c:125
+#, c-format
+msgid "   -D<file>  D: floppy image file or device (instead of %s)\n"
+msgstr "   -D<файл>  Образ дискеты или устройство D: (вместо %s)\n"
+
+#: ../main.c:126
+#, c-format
+msgid "   -a        Do not boot automatically\n"
+msgstr "   -a        Отключить автоматический запуск БК\n"
+
+#: ../main.c:127
+#, c-format
+msgid "   -c        Color mode\n"
+msgstr "   -c        Цветной режим\n"
+
+#: ../main.c:128
+#, fuzzy, c-format
+msgid "   -n        Disable sound \n"
+msgstr "   -m        Отключить мышь БК\n"
+
+#: ../main.c:129
+#, fuzzy, c-format
+msgid "   -v        Enable Covox\n"
+msgstr "   -m        Отключить мышь БК\n"
+
+#: ../main.c:130
+#, fuzzy, c-format
+msgid "   -y        Enable AY-3-8910\n"
+msgstr "   -m        Отключить мышь БК\n"
+
+#: ../main.c:131
+#, fuzzy, c-format
+msgid "   -m        Enable mouse\n"
+msgstr "   -m        Отключить мышь БК\n"
+
+#: ../main.c:132
+#, c-format
+msgid "   -S        Full speed mode\n"
+msgstr "   -S        Максимальная скорость\n"
+
+#: ../main.c:133
+#, c-format
+msgid "   -s        \"TURBO\" mode (Real overclocked BK)\n"
+msgstr "   -s        \"ТУРБО\" режим (Реальная скорость разогнанного БК)\n"
+
+#: ../main.c:134
+#, c-format
+msgid "   -R<file>  Specify an alternative ROM file @ 120000.\n"
+msgstr "   -R<файл>  Загрузить пользовательскую прошивку по адресу 120000.\n"
+
+#: ../main.c:135
+#, c-format
+msgid "   -r<file>  Specify an alternative ROM file @ 160000.\n"
+msgstr "   -r<файл>  Загрузить пользовательскую прошивку по адресу 160000.\n"
+
+#: ../main.c:136
+#, c-format
+msgid "   -T        Disable reading from tape\n"
+msgstr "   -T        Запретить чтение с магнитофона\n"
+
+#: ../main.c:137
+#, fuzzy, c-format
+msgid "   -t        Trace mode, -t<file> - to file\n"
+msgstr "   -t        Режим трассировки\n"
+
+#: ../main.c:138
+#, fuzzy, c-format
+msgid "   -l<path>  Enable printer and specify output pathname\n"
+msgstr "   -l<путь>  Путь размещения файла вывода с принтера БК\n"
+
+#: ../main.c:139
+#, c-format
+msgid ""
+"\n"
+"The default ROM files are stored in\n"
+"%s or the directory specified\n"
+"by the environment variable BK_PATH.\n"
+msgstr ""
+"\n"
+"Стандартные файлы прошивок ПЗУ находятся\n"
+"в %s или в каталоге, указанном\n"
+"в переменной окружения BK_PATH.\n"
+
+#: ../main.c:143
+#, c-format
+msgid ""
+"\n"
+"Examples:.\n"
+msgstr ""
+"\n"
+"Примеры:.\n"
+
+#: ../main.c:144
+#, c-format
+msgid "   'bk -R./BK.ROM' - Use custom ROM\n"
+msgstr "   'bk -R./BK.ROM' - Загрузка нестандартной прошивки\n"
+
+#: ../main.c:145
+#, c-format
+msgid "   'bk -a -n -f'   - Developer's mode\n"
+msgstr "   'bk -a -n -f'   - Для программирования\n"
+
+#: ../main.c:146
+#, c-format
+msgid ""
+"   'bk -c -d'      - Gaming mode\n"
+"\n"
+msgstr ""
+"   'bk -c -d'      - Для игр\n"
+"\n"
+
+#. Unknown ROM configuration
+#: ../main.c:187
+#, c-format
+msgid "Unknown BK model. Bailing out.\n"
+msgstr "Неизвестная модель БК. Стоп.\n"
+
+#: ../main.c:196
+#, c-format
+msgid "Initializing SDL.\n"
+msgstr "Инициализация SDL.\n"
+
+#: ../main.c:199
+#, c-format
+msgid "Could not initialize SDL: %s.\n"
+msgstr "Ошибка инициализации SDL: %s.\n"
+
+#: ../main.c:203
+#, c-format
+msgid ""
+"Welcome to \"Elektronika BK\" emulator!\n"
+"\n"
+msgstr ""
+"Добро пожаловать в эмулятор компьютеров серии \"Электроника БК\"!\n"
+"\n"
+
+#. print a short emulator help message
+#. print a short help message
+#: ../main.c:207
+#, c-format
+msgid "SDL initialized.\n"
+msgstr "Запуск SDL.\n"
+
+#: ../main.c:410
+#, c-format
+msgid "Instructions executed: %d\n"
+msgstr "Выполнено инструкций: %d\n"
+
+#: ../main.c:411
+#, c-format
+msgid "Simulation rate: %.5g instructions per second\n"
+msgstr "Скорость эмулятора: %.5g операций в секунду\n"
+
+#: ../main.c:413
+#, c-format
+msgid "BK speed: %.5g instructions per second\n"
+msgstr "Скорость БК: %.5g операций в секунду\n"
+
+#: ../main.c:479
+#, c-format
+msgid " pc=%06o, last branch @ %06o\n"
+msgstr " pc=%06o, последний переход по адресу %06o\n"
+
+#: ../main.c:488
+#, c-format
+msgid "Illegal inst. %s, last branch @ %06o\n"
+msgstr "Недопустимая инструкция. %s, последний переход по адресу %06o\n"
+
+#: ../main.c:518
+#, c-format
+msgid ""
+"\n"
+"Unexpected return.\n"
+msgstr ""
+"\n"
+"Неожиданное значение.\n"
+
+#: ../main.c:519
+#, c-format
+msgid "exec=%d pc=%06o ir=%06o\n"
+msgstr "exec=%d pc=%06o ir=%06o\n"
+
+#: ../main.c:526 ../main.c:535
+#, c-format
+msgid ""
+"\n"
+"Double trap @ %06o.\n"
+msgstr ""
+"\n"
+"Двойной trap по адресу %06o.\n"
+
+#: ../main.c:590
+#, c-format
+msgid ""
+"\n"
+"Execution interrupted.\n"
+msgstr ""
+"\n"
+"Выполнение прервано.\n"
+
+#: ../main.c:631
+#, c-format
+msgid "Simulating tune-up sequence\n"
+msgstr "Симуляция настроечной последовательности\n"
+
+#: ../main.c:637
+#, c-format
+msgid "Simulating reading array with tune-up\n"
+msgstr "Симуляция чтения данных с подстройкой\n"
+
+#: ../main.c:656
+#, c-format
+msgid ""
+"Emulator window hotkeys:\n"
+"\n"
+msgstr ""
+"Горячие клавиши:\n"
+"\n"
+
+#: ../main.c:657
+#, fuzzy, c-format
+msgid " ScrollLock - Toggle video mode (B/W, Color)\n"
+msgstr ""
+" ScrollLock - Перебор видеорежимов (ч/б, цвет) и увеличение в два раза\n"
+
+#: ../main.c:658
+#, c-format
+msgid " Left Super+F11 - Reset emulated machine\n"
+msgstr " Левый Super+F11 - Перезапуск БК\n"
+
+#: ../main.c:659
+#, c-format
+msgid ""
+" F12 - Load a file into BK memory\n"
+"\n"
+msgstr ""
+" F12 - Быстрая загрузка файла в память БК\n"
+"\n"
+
+#: ../main.c:664
+msgid ""
+"BK0010 MONITOR (the OS) commands:\n"
+"\n"
+" 'A' to 'K'  - Quit MONITOR.\n"
+" 'M'         - Read from tape. Press 'Enter' and type in the filename of\n"
+"               the desired .bin snapshot. Wait until the data loads into\n"
+"               the memory or use F12 instead.\n"
+" 'S'         - Start execution. You can specify an address to start from.\n"
+msgstr ""
+"Команды МОНИТОРА БК-0010:\n"
+"\n"
+" 'A' - 'K'   - Выход из МОНИТОРА.\n"
+" 'M'         - Чтение с магнитофона. Нажмите 'Ввод' и введите имя файла\n"
+"               в формате .bin. Подождите пока данные загрузятся в память "
+"или\n"
+"               воспользуйтесь функцией быстрой загрузки по клавише F12.\n"
+" 'S'         - Запуск программы. После команды можно указывать адрес "
+"запуска.\n"
+
+#: ../main.c:671
+#, fuzzy
+msgid ""
+"BK0011M BOS commands:\n"
+"\n"
+" 'B'         - Boot from any bootable floppy.\n"
+" 'xxxB'      - Boot from the floppy drive xxx.\n"
+" 'L'         - Load file from tape\n"
+" 'xxxxxxL'   - Load file to address xxxxxx.\n"
+" 'M' or '0M' - Turn the tape-recoder on.\n"
+" 'xM'        - Turn the tape-recoder off.\n"
+" 'G'         - Run currently loaded program.\n"
+" 'xxxxxxG'   - Run from address xxxxxx.\n"
+" 'P'         - Continue after the STOP key press or HALT.\n"
+" 'Step'      - Execute a single instruction and return to MONITOR.\n"
+" 'Backspace' - Delete last digit (digits only).\n"
+" 'xxxxxx/'   - Open word xxxxxx (octal) in memory for editing.\n"
+" 'xxxxxx\\'   - Open byte xxxxxx (octal) in memory for editing.\n"
+" 'Rx'        - Open system register x for editing.\n"
+" 'Enter'     - Close opened memory cell and accept changes.\n"
+" 'Up'        - Move to the next memory cell and accept changes.\n"
+" 'Down'      - Move to the previous memory cell and accept changes\n"
+" 'Left'      - Jump to address <address>+<word>+2 (\"67\" addressing).\n"
+" 'Right'     - Jump to address <address>+<byte>*2+2 (assembler 'BR' jump)\n"
+" '@'         - Close and jump to the address stored in the current memory "
+"cell.\n"
+" 'N;MC'      - Map memory page N (octal) to address range M (octal).\n"
+msgstr ""
+"Команды БОС БК0011М:\n"
+"\n"
+" 'B'          - Загрузка с любого загрузочного устройства.\n"
+" 'xxxB'       - Загрузка с дисковода xxx.\n"
+" 'L'          - Загрузить файл с магнитофона\n"
+" 'xxxxxxL'    - Загрузить файл с адреса xxxxxx.\n"
+" 'M' или '0M' - Включить мотор магнитофона.\n"
+" 'xM'         - Выключить мотор магнитофона.\n"
+" 'G'          - Запустить загруженную программу.\n"
+" 'xxxxxxG'    - Запуск на выполнение с адреса xxxxxx.\n"
+" 'P'          - Продолжить выполнение после нажатия СТОП или команды HALT.\n"
+" 'ШАГ'        - Выполнить одну инструкцию и вернуться в МОНИТОР.\n"
+" 'ЗАБОЙ'      - Стереть последнюю введённую цифру.\n"
+" 'xxxxxx/'    - Открыть ячейку xxxxxx (восьм.) для редактирования.\n"
+" 'xxxxxx\\'    - Открыть байт xxxxxx (восьм.) для редактирования.\n"
+" 'Rx'         - Открыть регистр x для редактирования.\n"
+" 'ВВОД'       - Закрыть ячейку, байт или регистр с сохранением изменений.\n"
+" 'ВВЕРХ'      - Перейти к следующей ячейке с·сохранением·изменений.\n"
+" 'ВНИЗ'       - Перейти·к·предыдущей·ячейке·с сохранением изменений.\n"
+" 'ВЛЕВО'      - Перейти по адресу <ячейка>+<слово>+2 (метод адресации \"67"
+"\").\n"
+" 'ВПРАВО'     - Перейти по адресу <ячейка>+<байт>*2+2 (переход 'BR')\n"
+" '@'          - Закрыть ячейку и перейти по хранящемуся в ней адресу.\n"
+" 'N;MC'       - Отобразить страницу N (восьм.) на область памяти M "
+"(восьм.).\n"
+
+#: ../main.c:697
+#, c-format
+msgid ""
+" 'T' - Run built-in tests.\n"
+"\n"
+msgstr ""
+" 'T' - Запуск встроенных тестов.\n"
+"\n"
+
+#: ../main.c:698
+#, c-format
+msgid "Type 'P M' to quit FOCAL and get the MONITOR prompt.\n"
+msgstr "Введите команду 'P M' чтобы выйти из ФОКАЛА в МОНИТОР.\n"
+
+#: ../main.c:699
+#, c-format
+msgid ""
+"Type 'P T' to enter the test mode. 1-5 selects a test.\n"
+"\n"
+msgstr ""
+"Введите команду 'P T' чтобы запустить встроенные тесты. Цифры 1-5 - выбор "
+"теста.\n"
+"\n"
+
+#: ../main.c:703
+#, c-format
+msgid ""
+"\n"
+"Type 'MO' to quit BASIC VILNIUS 1986 and get the MONITOR prompt.\n"
+"\n"
+msgstr ""
+"\n"
+"Введите команду 'MO' чтобы выйти из среды БЕЙСИК ВИЛЬНЮС 1986 в МОНИТОР.\n"
+"\n"
+
+#: ../main.c:707
+#, c-format
+msgid ""
+"\n"
+"Type 'S160000' to boot from floppy A:.\n"
+msgstr ""
+"\n"
+"Введите команду 'S160000' чтобы начать загрузку с дисковода A:.\n"
+
+#: ../main.c:708
+#, c-format
+msgid ""
+"The BASIC ROM is disabled.\n"
+"\n"
+msgstr ""
+"ПЗУ БЕЙСИКА отключено.\n"
+"\n"
+
+#: ../main.c:712
+#, c-format
+msgid ""
+"\n"
+"BK-0011M boots automatically from the first floppy drive available.\n"
+"\n"
+msgstr ""
+"\n"
+"БК-0011М автоматически загружает ОС с первого доступного дисковода.\n"
+"\n"
+
+#: ../maketape.c:66
+#, c-format
+msgid "Usage: maketape BK_NAME infile > outfile\n"
+msgstr ""
+"Использование: maketape [имя входного файла] (в формате БК) > [выходной "
+"файл]\n"
+
+#. checksum
+#: ../maketape.c:102
+#, c-format
+msgid "checksum = %06o\n"
+msgstr "Контрольная сумма = %06o\n"
+
+#: ../readtape.c:18
+#, c-format
+msgid "Tape ended\n"
+msgstr "Конец ленты\n"
+
+#: ../readtape.c:70
+#, c-format
+msgid "Found start tune-up sequence\n"
+msgstr "Обнаружена настроечная последовательность\n"
+
+#: ../readtape.c:81
+#, c-format
+msgid "Skipped %d strobes to find marker\n"
+msgstr "Пропущено %d стробирующих импульсов при поиске маркера\n"
+
+#: ../readtape.c:83
+#, c-format
+msgid "Polarity set to %d\n"
+msgstr "Полярность: %d\n"
+
+#: ../readtape.c:94
+#, c-format
+msgid "Threshold set to %d\n"
+msgstr "Порог: %d\n"
+
+#: ../readtape.c:113
+#, c-format
+msgid "Start address %06o, length %06o\n"
+msgstr "Начальный адрес: %06o, длина: %06o\n"
+
+#: ../readtape.c:117
+#, c-format
+msgid "File name: <% .16s>\n"
+msgstr "Имя файла: <% .16s>\n"
+
+#: ../readtape.c:127
+#, c-format
+msgid "Failed\n"
+msgstr "Ошибка\n"
+
+#: ../readtape.c:139
+#, c-format
+msgid "Checksum error: read %06o, computed %06o\n"
+msgstr "Ошибка контрольной суммы: считанная %06o, расчётная %06o\n"
+
+#: ../readtape.c:143
+#, c-format
+msgid "Checksum = %06o\n"
+msgstr "Контрольная сумма = %06o\n"
+
+#: ../readtape.c:172
+#, c-format
+msgid "False header marker\n"
+msgstr "Ложный маркер заголовка\n"
+
+#: ../readtape.c:182
+#, c-format
+msgid "Too short (%d) assuming 0\n"
+msgstr "Слишком короткий файл (%d) предполагаемая длина 0\n"
+
+#: ../readtape.c:183 ../readtape.c:188
+#, c-format
+msgid "Tape position %0o\n"
+msgstr "Положение ленты %0o\n"
+
+#: ../readtape.c:187
+#, c-format
+msgid "Too long (%d), assuming 1\n"
+msgstr "Слишком длинный файл (%d), предполагаемая длина 1\n"
+
+#: ../scr.c:68
+#, c-format
+msgid "Can't lock screen: %s\n"
+msgstr "Невозможно получить доступ к экрану: %s\n"
+
+#: ../scr.c:190
+#, c-format
+msgid "Couldn't set up video: %s\n"
+msgstr "Невозможно установить видеорежим: %s\n"
+
+#: ../sound.c:118
+#, c-format
+msgid "sound_init called\n"
+msgstr "Инициализация звуковой подсистемы\n"
+
+#: ../sound.c:120
+#, c-format
+msgid "Opening audio... "
+msgstr "Открытие устройства вывода звука... "
+
+#: ../sound.c:132
+msgid "Setting 16-bit sound failed"
+msgstr ""
+
+#: ../sound.c:136
+msgid "Setting mono sound failed"
+msgstr ""
+
+#: ../sound.c:143
+#, c-format
+msgid "Warning: %s doesn't support default sample rate of %d (set to %d)\n"
+msgstr ""
+"Внимание: %s не поддерживает стандартную частоту %d (установленную в %d)\n"
+
+#: ../sound.c:150
+msgid "/dev/dsp: setfragment failed"
+msgstr "/dev/dsp: ошибка процедуры setfragment"
+
+#: ../sound.c:156
+msgid "/dev/dsp: getbksize failed"
+msgstr "/dev/dsp: ошибка процедуры getbksize"
+
+#: ../sound.c:160
+#, c-format
+msgid "Warning: asked for sound delay 1/%d sec, got 1/%d sec\n"
+msgstr ""
+"Внимание: запрошена задержка проигрывания звука 1/%d сек., результат 1/%d "
+"сек.\n"
+
+#: ../sound.c:168
+#, c-format
+msgid "Warning: sound quality may be low\n"
+msgstr "Внимание: возможно ухудшение качества звука\n"
+
+#: ../sound.c:175
+#, c-format
+msgid "Failed to allocate sound buffers\n"
+msgstr "Ошибка выделения буферов звука\n"
+
+#: ../tape.c:43
+#, c-format
+msgid "readtape open successful\n"
+msgstr "Успешный запуск readtape\n"
+
+#: ../tape.c:65
+#, c-format
+msgid "Tape %s\n"
+msgstr "Магнитофон %s\n"
+
+#: ../tape.c:65 ../tty.c:198
+msgid "OFF"
+msgstr "ВЫКЛЮЧЕН"
+
+#: ../tape.c:65 ../tty.c:198
+msgid "ON"
+msgstr "ВКЛЮЧЕН"
+
+#: ../tape.c:106
+#, c-format
+msgid "End of tape\n"
+msgstr "Конец ленты\n"
+
+#: ../tape.c:157
+#, c-format
+msgid "Calling (%s)\n"
+msgstr "Вызов (%s)\n"
+
+#: ../tape.c:171
+#, c-format
+msgid "Closed maketape\n"
+msgstr "Завершение работы maketape\n"
+
+#: ../tape.c:202
+#, c-format
+msgid "Will read unix file <%s> under BK name <%s>\n"
+msgstr "Чтение файла Юникс <%s> с БК именем <%s>\n"
+
+#. We're not supposed to get here
+#: ../tape.c:212
+#, c-format
+msgid "Asked for strobe in Idle state?\n"
+msgstr "Запрос стробирующего импульса в состоянии остановки?\n"
+
+#: ../tape.c:223
+#, c-format
+msgid "File address will be %o\n"
+msgstr "Начальный адрес: %o\n"
+
+#: ../tape.c:236
+#, c-format
+msgid "File length will be %o\n"
+msgstr "Длина файла: %o\n"
+
+#: ../tape.c:267
+#, c-format
+msgid "Checksum will be %06o\n"
+msgstr "Контрольная сумма: %06o\n"
+
+#. 177710
+#: ../timer.c:55
+#, c-format
+msgid "Writing %06o to timer counter\n"
+msgstr "Запись %06o в счётчик таймера\n"
+
+#. 177710
+#. 177711
+#: ../timer.c:80
+#, c-format
+msgid "Writing %03o to timer counter\n"
+msgstr "Запись %03o в счётчик таймера\n"
+
+#: ../timer.c:126
+#, c-format
+msgid "Setting unknown timer mode bits\n"
+msgstr "Неизвестное сочетание битов режима таймера\n"
+
+#: ../timing.c:271
+#, c-format
+msgid "No timing for instr %06o\n"
+msgstr "Нет такта для инструкции %06o\n"
+
+#: ../tty.c:198
+#, c-format
+msgid "Timer %s\n"
+msgstr "Таймер %s\n"
+
+#: ../tty.c:203 ../tty.c:239 ../tty.c:252
+#, c-format
+msgid "Writing to kbd data register, "
+msgstr "Запись в регистр клавиатуры, "
+
+#: ../tty.c:322
+msgid "NAME? "
+msgstr "ИМЯ?"
+
+#: ../tty.c:394
+#, c-format
+msgid "Unexpected event %d\n"
+msgstr "Неожиданное событие %d\n"
+
+#. show help
+#: ../ui.c:109
+#, c-format
+msgid ""
+"\n"
+"Emulator shell commands:\n"
+"\n"
+msgstr ""
+"\n"
+"Команды эмулятора:\n"
+"\n"
+
+#: ../ui.c:110
+#, c-format
+msgid " 'a' - Show assembler code ( a [start [end]] )\n"
+msgstr ""
+
+#: ../ui.c:111
+#, fuzzy, c-format
+msgid " 'd' - Dump memory ( d [start [end]] ) \n"
+msgstr " 'd' - Запись содержимого памяти ('d начало конец' или 'd начало'\n"
+
+#: ../ui.c:112
+#, fuzzy, c-format
+msgid " 'e' - Edit memory, end with .\n"
+msgstr " 'e' - Редактирование ячеек памяти\n"
+
+#: ../ui.c:113
+#, c-format
+msgid " 'g' - Start execution ('g' or 'g 100000' boots the BK0010 computer)\n"
+msgstr ""
+" 'g' - Запуск на выполнение (команда 'g' или 'g 100000' соответствует "
+"запуску БК)\n"
+
+#: ../ui.c:114
+#, c-format
+msgid " 'r' - Register dump\n"
+msgstr " 'r' - Вывод содержимого регистров процессора\n"
+
+#: ../ui.c:115
+#, c-format
+msgid " 's' - Execute a single instruction\n"
+msgstr " 's' - Выполнить одну инструкцию\n"
+
+#: ../ui.c:116
+#, c-format
+msgid " 't' - Toggle trace flag\n"
+msgstr " 't' - Изменить флаг трассировки\n"
+
+#: ../ui.c:117
+#, c-format
+msgid " 'l' - Load file ('l filename.bin' loads specified file)\n"
+msgstr ""
+" 'l' - Загрузить файл ('l файл.bin' вызывает загрузку указанного файла)\n"
+
+#: ../ui.c:118
+#, c-format
+msgid " 'i' - Fire an interrupt\n"
+msgstr " 'i' - Вызвать прерывание\n"
+
+#: ../ui.c:119
+#, c-format
+msgid " 'b' - Set a breakpoint\n"
+msgstr " 'b' - Задать точку останова\n"
+
+#: ../ui.c:120
+#, c-format
+msgid " '?' - Emulator help\n"
+msgstr " '?' - Справка эмулятора\n"
+
+#: ../ui.c:121
+#, c-format
+msgid " 'h' - Command help\n"
+msgstr " 'h' - Обзор команд эмулятора\n"
+
+#: ../ui.c:122
+#, c-format
+msgid ""
+" 'q' - Quit\n"
+"\n"
+msgstr ""
+" 'q' - Выход\n"
+"\n"
+
+#. invalid command
+#: ../ui.c:128
+#, c-format
+msgid "Invalid command, use d, e, g, r, s, t, l, i, b, q, ? and h for help\n"
+msgstr ""
+"Неизвестная команда, введите d, e, g, r, s, t, l, i, b, q. ? и h - вызов "
+"справки\n"
+
+#. invalid   command
+#: ../ui.c:219 ../ui.c:226 ../ui.c:275 ../ui.c:316 ../ui.c:325 ../ui.c:348
+#: ../ui.c:376 ../ui.c:478 ../ui.c:485
+#, c-format
+msgid "Bad address\n"
+msgstr "Ошибочный адрес\n"
+
+#: ../ui.c:319
+#, c-format
+msgid "write error\n"
+msgstr "Ошибка записи\n"
+
+#: ../ui.c:365
+#, c-format
+msgid "Bad vector\n"
+msgstr "Ошибочный вектор\n"
+
+#: ../ui.c:412
+#, c-format
+msgid "LOAD called\n"
+msgstr "ЗАГРУЗКА файла\n"
+
+#: ../ui.c:430
+#, c-format
+msgid "Reading %s into %06o... "
+msgstr "Чтение %s в память с адреса %06o... "
+
+#: ../ui.c:432
+#, c-format
+msgid "Possible start addresses:  "
+msgstr "Возможные адреса запуска:  "
+
+#: ../ui.c:452
+#, c-format
+msgid ""
+"Done.\n"
+"Last filled address is %06o\n"
+msgstr ""
+"Завершено.\n"
+"Конечный адрес данных %06o\n"
+
+#~ msgid "Reading %06o\n"
+#~ msgstr "Чтение %06o\n"
+
+#~ msgid "Writing %03o to %06o\n"
+#~ msgstr "Запись в область %03o - %06o\n"
+
+#~ msgid "   -d        Double size mode\n"
+#~ msgstr "   -d        Увеличить экран в два раза\n"
+
+#~ msgid "   -n        Disable speaker\n"
+#~ msgstr "   -n        Отключить динамик БК\n"
+
+#~ msgid "WAIT instruction\n"
+#~ msgstr "Инструкция WAIT\n"
+
+#~ msgid "BK-0010 Emulator"
+#~ msgstr "Эмулятор БК-0010"
+
+#~ msgid "BK-0010"
+#~ msgstr "БК-0010"
+
+#~ msgid "ev_register(): no free events\n"
+#~ msgstr "ev_register(): нет свободного буфера событий\n"
+
+#~ msgid "   -0        BK-0010 (Focal and tape)\n"
+#~ msgstr "   -0        БК-0010 (Фокал, магнитофон)\n"
+
+#~ msgid "   -1        BK-0010.01 (Basic and tape)\n"
+#~ msgstr "   -1        БК-0010.01 (Бейсик, магнитофон)\n"
+
+#, fuzzy
+#~ msgid "   -2        BK-0010.01+FDD (No basic, floppy)\n"
+#~ msgstr "   -2        БК-0010.01 + НГМД\n"
+
+#, fuzzy
+#~ msgid "   -3        BK-0011 (M?)\n"
+#~ msgstr "   -0        БК-0011М + НГМД\n"
+
+#~ msgid "Reading 177130 @%06o, returned %06o\n"
+#~ msgstr "Чтение регистра 177130 содержащего %06o, результат %06o\n"
+
+#~ msgid "Reading 177132 @%06o, returned %06o\n"
+#~ msgstr "Чтение регистра 177132 содержащего %06o, результат %06o\n"
