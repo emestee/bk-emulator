@@ -1,8 +1,8 @@
 BK emulator
------------
+==========
 
 DISCLAIMER
-==========
+----------
 
 I (emestee@catnarok.net) am not the author of this software. The original code for the PDP11 emulator was
 written by Eric A. Edwards in 1994. It was then modified by Leonid A. Broukhis to support the Soviet BK-0010, 
@@ -72,6 +72,7 @@ When the emulation is running, you can issue a Ctrl-C in the emulator's console.
 you into the emulator's debugger. To load a game from a binary file (assuming you have one, none are distributed here), do:
 
 `l <filename>` (the emulator will look for the file in /usr/share/bk)
+
 `g 1000`
 
 Please feel free to contact me if you are curious about this. I will do my best to try and answer your questions.
