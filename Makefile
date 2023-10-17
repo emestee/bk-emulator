@@ -30,7 +30,7 @@
 # Change as needed
 #
 
-CC = gcc -std=gnu89
+CC = gcc -std=gnu89 -Wno-error=implicit-function-declaration -Wno-error=return-type -I/usr/local/Cellar/sdl2/2.28.4/include
 LD = gcc
 CFLAGS = -g -DSHIFTS_ALLOWED -DEIS_ALLOWED
 # CFLAGS = -O4 -fomit-frame-pointer # -DSHIFTS_ALLOWED
@@ -73,7 +73,7 @@ icon.c: pngtorgba bk.png
 	if [ ! -s icon.c ] ; then ./pngtorgba bk.png > icon.c ; fi
 
 $(TARGET):	$(OBJS)
-	$(LD) $(CFLAGS) -o $(TARGET) $(OBJS) /usr/lib/x86_64-linux-gnu/libSDL.so  -lpthread
+	$(LD) $(CFLAGS) -o $(TARGET) $(OBJS) /usr/local/Cellar/sdl2/2.28.4/lib/libSDL2.dylib -lpthread
 
 readtape: readtape.c
 	$(CC) $(CFLAGS) -o readtape readtape.c

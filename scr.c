@@ -1,10 +1,10 @@
 #include "defines.h"
-#include "SDL/SDL.h"
+#include "SDL2/SDL.h"
 #include "scr.h"
 #include <libintl.h>
 #define _(String) gettext (String)
 
-SDL_Surface * screen;
+SDL_Window * screen;
 flag_t cflag = 0, fullscreen = 0;
 int cur_shift = 0;
 int cur_width = 0;	/* 0 = narrow, !0 = wide */
@@ -18,6 +18,7 @@ int horsize = 512, vertsize = 512;
 unsigned char dirty[1024];
 // There are 256 scan lines in each of 2 buffers
 SDL_Surface * lines[512];
+SDL_Palette * lines_palettes[512];
 
 /*
  * The colors are ordered in the HW order, not in the "Basic" order.
@@ -54,8 +55,10 @@ int lower_porch = 3;	/* Default */
 #define LINES_TOTAL     (256+upper_porch+lower_porch)
 
 // It is unlikely that we get a hardware surface, but one can hope
-#define SCREEN_FLAGS    \
-	(SDL_HWSURFACE|SDL_HWACCEL|SDL_ASYNCBLIT|SDL_DOUBLEBUF|SDL_ANYFORMAT|SDL_HWPALETTE|(fullscreen ? SDL_FULLSCREEN : SDL_RESIZABLE))
+//#define SCREEN_FLAGS    \
+//	(SDL_HWSURFACE|SDL_HWACCEL|SDL_ASYNCBLIT|SDL_DOUBLEBUF|SDL_ANYFORMAT|SDL_HWPALETTE|(fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_RESIZABLE))
+#define SCREEN_FLAGS (fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE)
+
 
 Uint16 horbase[513], vertbase[257];
 
@@ -178,7 +181,9 @@ scr_init() {
 			0xff000000, 0xff0000, 0xff00, 0xff),
 	compute_icon_mask());
 	
-    screen = SDL_SetVideoMode(horsize, vertsize, 0, SCREEN_FLAGS);
+    screen = SDL_CreateWindow("blah", SDL_WINDOWPOS_UNDEFINED,
+                          SDL_WINDOWPOS_UNDEFINED, horsize, vertsize, SCREEN_FLAGS);
+    //screen = SDL_SetVideoMode(horsize, vertsize, 0, SCREEN_FLAGS);
     if (screen == NULL) {
         fprintf(stderr, _("Couldn't set up video: %s\n"),
                         SDL_GetError());
@@ -187,14 +192,15 @@ scr_init() {
 
     /* Translation disabled because of an SDL bug */
     if (bkmodel == 0) {
-    	SDL_WM_SetCaption("BK-0010", "BK-0010"); }
+    	SDL_SetWindowTitle(screen, "BK-0010"); }
     else {
-    	SDL_WM_SetCaption("BK-0011M", "BK-0011M"); 
+    	SDL_SetWindowTitle(screen, "BK-0011M"); 
     }
 
     active_palette = bkmodel ? 15 : 0;
 
-    if (screen->format->BitsPerPixel == 8) {
+    SDL_Surface * screen_surface = SDL_GetWindowSurface(screen);
+    if (screen_surface->format->BitsPerPixel == 8) {
 	SDL_SetColors(screen, palettes[active_palette], 0, 5);
     }
 
@@ -209,8 +215,9 @@ scr_init() {
 			SDL_GetError());
 		exit(1);
 	}
-	SDL_SetPalette(lines[i], SDL_LOGPAL,
-		palettes[active_palette], 0, 5);
+	//SDL_SetPalette(lines[i], SDL_LOGPAL,
+	//	palettes[active_palette], 0, 5);
+        SDL_SetPaletteColors(lines_palettes[i], palettes[active_palette], 0, 5);
 	dirty[i] = 0;
     }
     SDL_ShowCursor(SDL_DISABLE);
@@ -260,7 +267,8 @@ scr_switch(int hsize, int vsize) {
     }
 
     if (restore || old_hor != horsize || old_vert != vertsize) { 
-	screen = SDL_SetVideoMode(horsize, vertsize, 0, SCREEN_FLAGS);	
+	screen = SDL_CreateWindow("blah", SDL_WINDOWPOS_UNDEFINED,
+                          SDL_WINDOWPOS_UNDEFINED, horsize, vertsize, SCREEN_FLAGS);	
     }
 
     setup_bases();   
@@ -396,8 +404,9 @@ scr_refresh_bk0011_1(unsigned shift, unsigned full) {
 		dstrect.y = i;
 		if (dirty[physline] | blit_all) {
 			if (do_palette) {
-				SDL_SetPalette(l, SDL_LOGPAL,
-					palettes[req_palette[2*i+(i&1)]], 0, 5);
+                                SDL_SetPaletteColors(l, palettes[req_palette[2*i+(i&1)]], 0, 5);
+				//SDL_SetPalette(l, SDL_LOGPAL,
+			//		palettes[req_palette[2*i+(i&1)]], 0, 5);
 			}
 			SDL_BlitSurface(l, &srcrect, screen, &dstrect);
 			if (!update_all) {
@@ -447,8 +456,9 @@ scr_refresh_bk0011_2(unsigned shift, unsigned full) {
 		dstrect.y = i;
 		if (dirty[physline] | blit_all) {
 			if (do_palette) {
-				SDL_SetPalette(l, SDL_LOGPAL,
-					palettes[req_palette[2*j+(i&1)]], 0, 5);
+                                SDL_SetPaletteColors(l, palettes[req_palette[2*j+(i&1)]], 0, 5);
+				//SDL_SetPalette(l, SDL_LOGPAL,
+				//	palettes[req_palette[2*j+(i&1)]], 0, 5);
 			}
 			SDL_BlitSurface(l, &srcrect, screen, &dstrect);
 			if (!update_all) {

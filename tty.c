@@ -19,9 +19,9 @@
  */
 
 #include "defines.h"
-#include "SDL/SDL.h"
-#include "SDL/SDL_keysym.h"
-#include "SDL/SDL_events.h"
+#include "SDL2/SDL.h"
+//#include "SDL2/SDL_keysym.h"
+#include "SDL2/SDL_events.h"
 #include <ctype.h>
 #include <libintl.h>
 #define _(String) gettext (String)
@@ -49,7 +49,7 @@ d_word tty_data;
 d_word tty_scroll = 1330;
 unsigned char key_pressed = 0100;
 flag_t timer_intr_enabled = 0;
-int special_keys[SDLK_LAST], shifted[256];
+int special_keys[SDL_NUM_SCANCODES], shifted[256];
 
 static tty_pending_int = 0;
 extern unsigned long pending_interrupts;
@@ -57,7 +57,7 @@ tty_open()
 {
     int i;
     /* initialize the keytables */
-    for (i = 0; i < SDLK_LAST; i++) {
+    for (i = 0; i < SDL_NUM_SCANCODES; i++) {
 	special_keys[i] = -1;
     }
     special_keys[SDLK_BACKSPACE] = 030;
@@ -65,11 +65,11 @@ tty_open()
     special_keys[SDLK_RETURN] = 012;
     special_keys[SDLK_CLEAR] = 014;        /* sbr */
 
-    for (i = SDLK_NUMLOCK; i <= SDLK_COMPOSE; i++)
+    for (i = SDLK_NUMLOCKCLEAR; i <= SDLK_APPLICATION; i++)
 	special_keys[i] = TTY_NOTHING;
 
-    special_keys[SDLK_SCROLLOCK] = TTY_SWITCH;
-    special_keys[SDLK_LSUPER] = TTY_AR2;
+    special_keys[SDLK_SCROLLLOCK] = TTY_SWITCH;
+    //special_keys[SDLK_LSUPER] = TTY_AR2;
     special_keys[SDLK_LALT] = TTY_AR2;
     special_keys[SDLK_ESCAPE] = TTY_STOP;
 
@@ -83,7 +83,7 @@ tty_open()
     special_keys[SDLK_PAGEDOWN] = -1;    /* PgDn */
     special_keys[SDLK_END] = -1;
     special_keys[SDLK_INSERT] = -1;
-    special_keys[SDLK_BREAK] = TTY_STOP;
+    special_keys[SDLK_PAUSE] = TTY_STOP;
     special_keys[SDLK_F1] = 0201;          /* povt */
     special_keys[SDLK_F2] = 003;           /* kt */
     special_keys[SDLK_F3] = 0213;          /* -|--> */
@@ -375,19 +375,29 @@ tty_recv()
 	    case SDL_KEYDOWN: case SDL_KEYUP:
 		tty_keyevent(&ev);
 		break;
-	    case SDL_VIDEOEXPOSE:
-	    case SDL_ACTIVEEVENT:
-		/* the visibility changed */
+            case SDL_WINDOWEVENT: {
+            switch (ev.window.event) {
+            case SDL_WINDOWEVENT_RESIZED:
+	  	scr_switch(ev.window.data1, ev.window.data2);
+                break;
+            case SDL_WINDOWEVENT_EXPOSED:
 		scr_dirty  = 256;
 		break;
+            }
+            }
+	    //case SDL_VIDEOEXPOSE:
+	    //case SDL_ACTIVEEVENT:
+		/* the visibility changed */
+	//	scr_dirty  = 256;
+	//	break;
 	    case SDL_MOUSEBUTTONDOWN:
 	    case SDL_MOUSEBUTTONUP:
 	    case SDL_MOUSEMOTION:
 		mouse_event(&ev);
 		break;
-	    case SDL_VIDEORESIZE:
-		scr_switch(ev.resize.w, ev.resize.h);
-		break;
+	    //case SDL_VIDEORESIZE:
+	//	scr_switch(ev.resize.w, ev.resize.h);
+	//	break;
 	    case SDL_QUIT:
 		exit(0);
 	    default:;
