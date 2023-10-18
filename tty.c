@@ -289,19 +289,20 @@ stop_key() {
 
 static int ar2 = 0;
 tty_keyevent(SDL_Event * pev) {
-	int k, c;
+	int k, c, scan_code;
 	k = pev->key.keysym.sym;
+    scan_code = pev->key.keysym.scancode;
 	if (SDLK_UNKNOWN == k) {
 	    return;
 	}
 	if(pev->type == SDL_KEYUP) {
 	    key_pressed = 0100;
-	    if (special_keys[k] == TTY_AR2) ar2 = 0;
+	    if (special_keys[scan_code] == TTY_AR2) ar2 = 0;
 	    return;
 	}
 	/* modifier keys handling */
-	if (special_keys[k] != -1) {
-	    switch (special_keys[k]) {
+	if (special_keys[scan_code] != -1) {
+	    switch (special_keys[scan_code]) {
 	    case TTY_STOP:
 		stop_key();     /* STOP is NMI */
 		return;
@@ -331,7 +332,7 @@ tty_keyevent(SDL_Event * pev) {
 		scr_switch(0, 0);
 		return;
 	    default:
-		c = special_keys[k];
+		c = special_keys[scan_code];
 	    }
 	} else {
 	    // Keysym follows ASCII
@@ -370,7 +371,6 @@ tty_recv()
     /* fprintf(stderr, "Polling events..."); */
     while (SDL_PollEvent(&ev)) {
 	extern void mouse_event(SDL_Event * pev);
-
 	    switch (ev.type) {
 	    case SDL_KEYDOWN: case SDL_KEYUP:
 		tty_keyevent(&ev);
