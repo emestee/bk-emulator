@@ -4,7 +4,8 @@
 #include <libintl.h>
 #define _(String) gettext (String)
 
-SDL_Window * screen;
+SDL_Window * window;
+SDL_Surface * screen;
 SDL_Renderer * renderer;
 flag_t cflag = 0, fullscreen = 0;
 int cur_shift = 0;
@@ -19,7 +20,6 @@ int horsize = 512, vertsize = 512;
 unsigned char dirty[1024];
 // There are 256 scan lines in each of 2 buffers
 SDL_Surface * lines[512];
-SDL_Palette * lines_palettes[512];
 
 /*
  * The colors are ordered in the HW order, not in the "Basic" order.
@@ -177,19 +177,19 @@ scr_init() {
     if (init_done) return;
     init_done = 1;
 
-    SDL_SetWindowIcon(screen, SDL_CreateRGBSurfaceFrom(bk_icon, bk_icon_width,
-			bk_icon_height, 32, bk_icon_width*4,
-			0xff000000, 0xff0000, 0xff00, 0xff));
     //SDL_WM_SetIcon(SDL_CreateRGBSurfaceFrom(bk_icon, bk_icon_width,
     //           bk_icon_height, 32, bk_icon_width*4,
     //           0xff000000, 0xff0000, 0xff00, 0xff),
 	//compute_icon_mask());
 	
-    screen = SDL_CreateWindow("blah", SDL_WINDOWPOS_UNDEFINED,
+    window = SDL_CreateWindow("blah", SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED, horsize, vertsize, SCREEN_FLAGS);
-    renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_SOFTWARE);
+    SDL_SetWindowIcon(window, SDL_CreateRGBSurfaceFrom(bk_icon, bk_icon_width,
+                                                       bk_icon_height, 32, bk_icon_width*4,
+                                                       0xff000000, 0xff0000, 0xff00, 0xff));
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
     //screen = SDL_SetVideoMode(horsize, vertsize, 0, SCREEN_FLAGS);
-    if (screen == NULL) {
+    if (renderer == NULL) {
         fprintf(stderr, _("Couldn't set up video: %s\n"),
                         SDL_GetError());
         exit(1);
@@ -197,21 +197,21 @@ scr_init() {
 
     /* Translation disabled because of an SDL bug */
     if (bkmodel == 0) {
-    	SDL_SetWindowTitle(screen, "BK-0010"); }
+    	SDL_SetWindowTitle(window, "BK-0010"); }
     else {
-    	SDL_SetWindowTitle(screen, "BK-0011M"); 
+    	SDL_SetWindowTitle(window, "BK-0011M");
     }
 
     active_palette = bkmodel ? 15 : 0;
 
-    SDL_Surface * screen_surface = SDL_GetWindowSurface(screen);
-    if (screen_surface == 0) {
+    screen = SDL_GetWindowSurface(window);
+    if (screen == 0) {
         fprintf(stderr, _("Failed to get surface from window: %s\n"), SDL_GetError());
         exit(1);
     }
-    if (screen_surface->format->BitsPerPixel == 8) {
+    if (screen->format->BitsPerPixel == 8) {
 	//SDL_SetColors(screen, palettes[active_palette], 0, 5);
-    SDL_SetPaletteColors(screen_surface->format->palette, palettes[active_palette], 0, 5);
+    SDL_SetPaletteColors(screen->format->palette, palettes[active_palette], 0, 5);
     }
 
     /* Create palettized surfaces for scan lines for the highest possible
@@ -227,7 +227,7 @@ scr_init() {
 	}
 	//SDL_SetPalette(lines[i], SDL_LOGPAL,
 	//	palettes[active_palette], 0, 5);
-        SDL_SetPaletteColors(lines_palettes[i], palettes[active_palette], 0, 5);
+        SDL_SetPaletteColors(lines[i]->format->palette, palettes[active_palette], 0, 5);
 	dirty[i] = 0;
     }
     SDL_ShowCursor(SDL_DISABLE);
@@ -277,7 +277,7 @@ scr_switch(int hsize, int vsize) {
     }
 
     if (restore || old_hor != horsize || old_vert != vertsize) { 
-	screen = SDL_CreateWindow("blah", SDL_WINDOWPOS_UNDEFINED,
+	window = SDL_CreateWindow("blah", SDL_WINDOWPOS_UNDEFINED,
                           SDL_WINDOWPOS_UNDEFINED, horsize, vertsize, SCREEN_FLAGS);	
     }
 
@@ -362,6 +362,7 @@ scr_refresh_bk0010(unsigned shift, unsigned full) {
 		if (dirty[line] | blit_all) {
 			int n = vertstretch-1;
 			do {
+
 				SDL_BlitSurface(l, &srcrect, screen, &dstrect);
 				dstrect.y++;
 			} while (n--);
@@ -416,7 +417,7 @@ scr_refresh_bk0011_1(unsigned shift, unsigned full) {
 		dstrect.y = i;
 		if (dirty[physline] | blit_all) {
 			if (do_palette) {
-                                SDL_SetPaletteColors(l, palettes[req_palette[2*i+(i&1)]], 0, 5);
+                SDL_SetPaletteColors(l->format->palette, palettes[req_palette[2*i+(i&1)]], 0, 5);
 				//SDL_SetPalette(l, SDL_LOGPAL,
 			//		palettes[req_palette[2*i+(i&1)]], 0, 5);
 			}
@@ -470,7 +471,7 @@ scr_refresh_bk0011_2(unsigned shift, unsigned full) {
 		dstrect.y = i;
 		if (dirty[physline] | blit_all) {
 			if (do_palette) {
-                                SDL_SetPaletteColors(l, palettes[req_palette[2*j+(i&1)]], 0, 5);
+                                SDL_SetPaletteColors(l->format->palette, palettes[req_palette[2*j+(i&1)]], 0, 5);
 				//SDL_SetPalette(l, SDL_LOGPAL,
 				//	palettes[req_palette[2*j+(i&1)]], 0, 5);
 			}
