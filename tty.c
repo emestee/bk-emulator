@@ -60,42 +60,42 @@ tty_open()
     for (i = 0; i < SDL_NUM_SCANCODES; i++) {
 	special_keys[i] = -1;
     }
-    special_keys[SDLK_BACKSPACE] = 030;
-    special_keys[SDLK_TAB] = 011;
-    special_keys[SDLK_RETURN] = 012;
-    special_keys[SDLK_CLEAR] = 014;        /* sbr */
+    special_keys[SDL_SCANCODE_BACKSPACE] = 030;
+    special_keys[SDL_SCANCODE_TAB] = 011;
+    special_keys[SDL_SCANCODE_RETURN] = 012;
+    special_keys[SDL_SCANCODE_CLEAR] = 014;        /* sbr */
 
-    for (i = SDLK_NUMLOCKCLEAR; i <= SDLK_APPLICATION; i++)
+    for (i = SDL_SCANCODE_NUMLOCKCLEAR; i <= SDL_SCANCODE_APPLICATION; i++)
 	special_keys[i] = TTY_NOTHING;
 
-    special_keys[SDLK_SCROLLLOCK] = TTY_SWITCH;
+    special_keys[SDL_SCANCODE_SCROLLLOCK] = TTY_SWITCH;
     //special_keys[SDLK_LSUPER] = TTY_AR2;
-    special_keys[SDLK_LALT] = TTY_AR2;
-    special_keys[SDLK_ESCAPE] = TTY_STOP;
+    special_keys[SDL_SCANCODE_LALT] = TTY_AR2;
+    special_keys[SDL_SCANCODE_ESCAPE] = TTY_STOP;
 
-    special_keys[SDLK_DELETE] = -1;
-    special_keys[SDLK_LEFT] = 010;
-    special_keys[SDLK_UP] = 032;
-    special_keys[SDLK_RIGHT] = 031;
-    special_keys[SDLK_DOWN] = 033;
-    special_keys[SDLK_HOME] = 023;         /* vs */
-    special_keys[SDLK_PAGEUP] = -1;     /* PgUp */
-    special_keys[SDLK_PAGEDOWN] = -1;    /* PgDn */
-    special_keys[SDLK_END] = -1;
-    special_keys[SDLK_INSERT] = -1;
-    special_keys[SDLK_PAUSE] = TTY_STOP;
-    special_keys[SDLK_F1] = 0201;          /* povt */
-    special_keys[SDLK_F2] = 003;           /* kt */
-    special_keys[SDLK_F3] = 0213;          /* -|--> */
-    special_keys[SDLK_F4] = 026;           /* |<--- */
-    special_keys[SDLK_F5] = 027;           /* |---> */
-    special_keys[SDLK_F6] = 0202;          /* ind su */
-    special_keys[SDLK_F7] = 0204;          /* blk red */
-    special_keys[SDLK_F8] = 0200;          /* shag */
-    special_keys[SDLK_F9] = 014;           /* sbr */
-    special_keys[SDLK_F10] = TTY_STOP;
-    special_keys[SDLK_F11] = TTY_RESET;
-    special_keys[SDLK_F12] = TTY_DOWNLOAD;
+    special_keys[SDL_SCANCODE_DELETE] = -1;
+    special_keys[SDL_SCANCODE_LEFT] = 010;
+    special_keys[SDL_SCANCODE_UP] = 032;
+    special_keys[SDL_SCANCODE_RIGHT] = 031;
+    special_keys[SDL_SCANCODE_DOWN] = 033;
+    special_keys[SDL_SCANCODE_HOME] = 023;         /* vs */
+    special_keys[SDL_SCANCODE_PAGEUP] = -1;     /* PgUp */
+    special_keys[SDL_SCANCODE_PAGEDOWN] = -1;    /* PgDn */
+    special_keys[SDL_SCANCODE_END] = -1;
+    special_keys[SDL_SCANCODE_INSERT] = -1;
+    special_keys[SDL_SCANCODE_PAUSE] = TTY_STOP;
+    special_keys[SDL_SCANCODE_F1] = 0201;          /* povt */
+    special_keys[SDL_SCANCODE_F2] = 003;           /* kt */
+    special_keys[SDL_SCANCODE_F3] = 0213;          /* -|--> */
+    special_keys[SDL_SCANCODE_F4] = 026;           /* |<--- */
+    special_keys[SDL_SCANCODE_F5] = 027;           /* |---> */
+    special_keys[SDL_SCANCODE_F6] = 0202;          /* ind su */
+    special_keys[SDL_SCANCODE_F7] = 0204;          /* blk red */
+    special_keys[SDL_SCANCODE_F8] = 0200;          /* shag */
+    special_keys[SDL_SCANCODE_F9] = 014;           /* sbr */
+    special_keys[SDL_SCANCODE_F10] = TTY_STOP;
+    special_keys[SDL_SCANCODE_F11] = TTY_RESET;
+    special_keys[SDL_SCANCODE_F12] = TTY_DOWNLOAD;
     for (i = 0; i < 256; i++) {
 	shifted[i] = i;
     }

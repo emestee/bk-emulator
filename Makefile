@@ -73,13 +73,13 @@ icon.c: pngtorgba bk.png
 	if [ ! -s icon.c ] ; then ./pngtorgba bk.png > icon.c ; fi
 
 $(TARGET):	$(OBJS)
-	$(LD) $(CFLAGS) -o $(TARGET) $(OBJS) /usr/local/Cellar/sdl2/2.28.4/lib/libSDL2.dylib -lpthread
+	$(LD) $(CFLAGS) -o $(TARGET) $(OBJS) /usr/local/Cellar/sdl2/2.28.4/lib/libSDL2.dylib /usr/local/Cellar/gettext/0.22.3/lib/libintl.dylib -lpthread
 
 readtape: readtape.c
-	$(CC) $(CFLAGS) -o readtape readtape.c
+	$(CC) $(CFLAGS) -o readtape /usr/local/Cellar/gettext/0.22.3/lib/libintl.dylib readtape.c
 
 maketape: maketape.c
-	$(CC) $(CFLAGS) -o maketape maketape.c
+	$(CC) $(CFLAGS) -o maketape /usr/local/Cellar/gettext/0.22.3/lib/libintl.dylib maketape.c
 
 #
 # Cool Utilities
