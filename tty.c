@@ -335,6 +335,10 @@ tty_keyevent(SDL_Event * pev) {
 		c = special_keys[scan_code];
 	    }
 	} else {
+        if (k > 255) {
+            // non character key
+            return;
+        }
 	    // Keysym follows ASCII
 	    c = k;
 	    if ((pev->key.keysym.mod & KMOD_CAPS) && isalpha(c)) {
