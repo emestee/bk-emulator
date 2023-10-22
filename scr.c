@@ -276,9 +276,8 @@ scr_switch(int hsize, int vsize) {
 	}
     }
 
-    if (restore || old_hor != horsize || old_vert != vertsize) { 
-	window = SDL_CreateWindow("blah", SDL_WINDOWPOS_UNDEFINED,
-                          SDL_WINDOWPOS_UNDEFINED, horsize, vertsize, SCREEN_FLAGS);	
+    if (restore || old_hor != horsize || old_vert != vertsize) {
+        screen = SDL_GetWindowSurface(window);
     }
 
     setup_bases();   
