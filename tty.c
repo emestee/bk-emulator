@@ -290,7 +290,7 @@ static int ar2 = 0;
 tty_keyevent(SDL_Event * pev) {
 	int k, c, scan_code;
 	k = pev->key.keysym.sym;
-    scan_code = pev->key.keysym.scancode;
+	scan_code = pev->key.keysym.scancode;
 	if (SDLK_UNKNOWN == k) {
 	    return;
 	}
