@@ -20,7 +20,6 @@
 
 #include "defines.h"
 #include "SDL2/SDL.h"
-//#include "SDL2/SDL_keysym.h"
 #include "SDL2/SDL_events.h"
 #include <ctype.h>
 #include <libintl.h>
@@ -69,7 +68,7 @@ tty_open()
 	special_keys[i] = TTY_NOTHING;
 
     special_keys[SDL_SCANCODE_SCROLLLOCK] = TTY_SWITCH;
-    //special_keys[SDLK_LSUPER] = TTY_AR2;
+    special_keys[SDL_SCANCODE_LGUI] = TTY_AR2;
     special_keys[SDL_SCANCODE_LALT] = TTY_AR2;
     special_keys[SDL_SCANCODE_ESCAPE] = TTY_STOP;
 
@@ -335,10 +334,10 @@ tty_keyevent(SDL_Event * pev) {
 		c = special_keys[scan_code];
 	    }
 	} else {
-        if (k > 255) {
-            // non character key
-            return;
-        }
+		if (k > 255) {
+			// non character key
+			return;
+		}
 	    // Keysym follows ASCII
 	    c = k;
 	    if ((pev->key.keysym.mod & KMOD_CAPS) && isalpha(c)) {
@@ -379,29 +378,22 @@ tty_recv()
 	    case SDL_KEYDOWN: case SDL_KEYUP:
 		tty_keyevent(&ev);
 		break;
-            case SDL_WINDOWEVENT: {
-            switch (ev.window.event) {
-            case SDL_WINDOWEVENT_RESIZED:
-	  	scr_switch(ev.window.data1, ev.window.data2);
-                break;
-            case SDL_WINDOWEVENT_EXPOSED:
-		scr_dirty  = 256;
-		break;
-            }
-            }
-	    //case SDL_VIDEOEXPOSE:
-	    //case SDL_ACTIVEEVENT:
-		/* the visibility changed */
-	//	scr_dirty  = 256;
-	//	break;
+		case SDL_WINDOWEVENT: {
+			switch (ev.window.event) {
+			case SDL_WINDOWEVENT_RESIZED:
+				scr_switch(ev.window.data1, ev.window.data2);
+				break;
+			case SDL_WINDOWEVENT_EXPOSED:
+				 /* the visibility changed */
+				 scr_dirty  = 256;
+				 break;
+			}
+		}
 	    case SDL_MOUSEBUTTONDOWN:
 	    case SDL_MOUSEBUTTONUP:
 	    case SDL_MOUSEMOTION:
 		mouse_event(&ev);
 		break;
-	    //case SDL_VIDEORESIZE:
-	//	scr_switch(ev.resize.w, ev.resize.h);
-	//	break;
 	    case SDL_QUIT:
 		exit(0);
 	    default:;

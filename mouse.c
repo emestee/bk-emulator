@@ -39,8 +39,7 @@ mouse_event(SDL_Event * pev) {
 		if (pev->button.button == 3) {
 			/* middle button switches grab mode */
 			grab_mode ^= 1;
-	 		SDL_SetRelativeMouseMode(grab_mode ? SDL_TRUE : SDL_FALSE);
-			//SDL_WM_GrabInput(grab_mode ? SDL_GRAB_ON : SDL_GRAB_OFF);			return;
+			SDL_SetRelativeMouseMode(grab_mode ? SDL_TRUE : SDL_FALSE);
 		}
 		mouse_button_state |= mouse_but0 << pev->button.button;
 		break;
