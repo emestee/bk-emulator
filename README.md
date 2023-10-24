@@ -76,4 +76,6 @@ you into the emulator's debugger. To load a game from a binary file (assuming yo
 
 `g 1000`
 
+For instructions on how to compile on Mac use this link: [MAC-BUILD.md](./MAC-BUILD.md)
+
 Please feel free to contact me if you are curious about this. I will do my best to try and answer your questions.

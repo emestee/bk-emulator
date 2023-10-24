@@ -30,7 +30,7 @@
 # Change as needed
 #
 
-CC = gcc -std=gnu89 -Wno-error=implicit-function-declaration -Wno-error=return-type -I/usr/local/Cellar/sdl2/2.28.4/include
+CC = gcc -std=gnu89 -Wno-error=implicit-function-declaration -Wno-error=return-type # -I/usr/local/Cellar/sdl2/2.28.4/include
 LD = gcc
 CFLAGS = -g -DSHIFTS_ALLOWED -DEIS_ALLOWED
 # CFLAGS = -O4 -fomit-frame-pointer # -DSHIFTS_ALLOWED
@@ -57,6 +57,7 @@ OBJS =	access.o boot.o branch.o conf.o covox.o double.o ea.o itab.o icon.o \
 INCS =	defines.h scr.h conf.h emu2149.h emutypes.h
 USRCS = readtape.c maketape.c pngtorgba.c
 TEXTS =	README.html configure.in icon.c
+# GETTEXT_LIB = /usr/local/lib/libintl.dylib
 
 #
 # Build Rules
@@ -73,13 +74,13 @@ icon.c: pngtorgba bk.png
 	if [ ! -s icon.c ] ; then ./pngtorgba bk.png > icon.c ; fi
 
 $(TARGET):	$(OBJS)
-	$(LD) $(CFLAGS) -o $(TARGET) $(OBJS) /usr/local/Cellar/sdl2/2.28.4/lib/libSDL2.dylib /usr/local/Cellar/gettext/0.22.3/lib/libintl.dylib -lpthread
+	$(LD) $(CFLAGS) -o $(TARGET) $(OBJS) /usr/lib/x86_64-linux-gnu/libSDL.so $(GETTEXT_LIB) -lpthread
 
 readtape: readtape.c
-	$(CC) $(CFLAGS) -o readtape /usr/local/Cellar/gettext/0.22.3/lib/libintl.dylib readtape.c
+	$(CC) $(CFLAGS) -o readtape $(GETTEXT_LIB) readtape.c
 
 maketape: maketape.c
-	$(CC) $(CFLAGS) -o maketape /usr/local/Cellar/gettext/0.22.3/lib/libintl.dylib maketape.c
+	$(CC) $(CFLAGS) -o maketape $(GETTEXT_LIB) maketape.c
 
 #
 # Cool Utilities
