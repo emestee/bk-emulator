@@ -30,7 +30,7 @@
 
 #include "defines.h"
 #include "scr.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <libintl.h>
 #include <locale.h>
 #include <sys/time.h>

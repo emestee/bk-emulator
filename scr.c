@@ -1,9 +1,11 @@
 #include "defines.h"
-#include "SDL/SDL.h"
+#include "SDL2/SDL.h"
 #include "scr.h"
 #include <libintl.h>
 #define _(String) gettext (String)
 
+SDL_Window * window;
+SDL_Renderer * renderer;
 SDL_Surface * screen;
 flag_t cflag = 0, fullscreen = 0;
 int cur_shift = 0;
@@ -53,9 +55,8 @@ int lower_porch = 3;	/* Default */
 
 #define LINES_TOTAL     (256+upper_porch+lower_porch)
 
-// It is unlikely that we get a hardware surface, but one can hope
-#define SCREEN_FLAGS    \
-	(SDL_HWSURFACE|SDL_HWACCEL|SDL_ASYNCBLIT|SDL_DOUBLEBUF|SDL_ANYFORMAT|SDL_HWPALETTE|(fullscreen ? SDL_FULLSCREEN : SDL_RESIZABLE))
+#define SCREEN_FLAGS (fullscreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE)
+
 
 Uint16 horbase[513], vertbase[257];
 
@@ -173,29 +174,34 @@ scr_init() {
     if (init_done) return;
     init_done = 1;
 
-    SDL_WM_SetIcon(SDL_CreateRGBSurfaceFrom(bk_icon, bk_icon_width,
-			bk_icon_height, 32, bk_icon_width*4,
-			0xff000000, 0xff0000, 0xff00, 0xff),
-	compute_icon_mask());
-	
-    screen = SDL_SetVideoMode(horsize, vertsize, 0, SCREEN_FLAGS);
-    if (screen == NULL) {
-        fprintf(stderr, _("Couldn't set up video: %s\n"),
-                        SDL_GetError());
-        exit(1);
-    }
+	window = SDL_CreateWindow("BK0010", SDL_WINDOWPOS_UNDEFINED,
+							  SDL_WINDOWPOS_UNDEFINED, horsize, vertsize, SCREEN_FLAGS);
+	SDL_SetWindowIcon(window, SDL_CreateRGBSurfaceFrom(bk_icon, bk_icon_width,
+													   bk_icon_height, 32, bk_icon_width*4,
+													   0xff000000, 0xff0000, 0xff00, 0xff));
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+	if (renderer == NULL) {
+		fprintf(stderr, _("Couldn't set up video: %s\n"),
+						 SDL_GetError());
+		exit(1);
+	}
 
     /* Translation disabled because of an SDL bug */
     if (bkmodel == 0) {
-    	SDL_WM_SetCaption("BK-0010", "BK-0010"); }
+		SDL_SetWindowTitle(window, "BK-0010"); }
     else {
-    	SDL_WM_SetCaption("BK-0011M", "BK-0011M"); 
+		SDL_SetWindowTitle(window, "BK-0011M");
     }
 
     active_palette = bkmodel ? 15 : 0;
 
+    screen = SDL_GetWindowSurface(window);
+    if (screen == 0) {
+        fprintf(stderr, _("Failed to get surface from window: %s\n"), SDL_GetError());
+        exit(1);
+    }
     if (screen->format->BitsPerPixel == 8) {
-	SDL_SetColors(screen, palettes[active_palette], 0, 5);
+		SDL_SetPaletteColors(screen->format->palette, palettes[active_palette], 0, 5);
     }
 
     /* Create palettized surfaces for scan lines for the highest possible
@@ -209,8 +215,7 @@ scr_init() {
 			SDL_GetError());
 		exit(1);
 	}
-	SDL_SetPalette(lines[i], SDL_LOGPAL,
-		palettes[active_palette], 0, 5);
+	SDL_SetPaletteColors(lines[i]->format->palette, palettes[active_palette], 0, 5);
 	dirty[i] = 0;
     }
     SDL_ShowCursor(SDL_DISABLE);
@@ -259,8 +264,8 @@ scr_switch(int hsize, int vsize) {
 	}
     }
 
-    if (restore || old_hor != horsize || old_vert != vertsize) { 
-	screen = SDL_SetVideoMode(horsize, vertsize, 0, SCREEN_FLAGS);	
+    if (restore || old_hor != horsize || old_vert != vertsize) {
+		screen = SDL_GetWindowSurface(window);
     }
 
     setup_bases();   
@@ -348,7 +353,7 @@ scr_refresh_bk0010(unsigned shift, unsigned full) {
 				dstrect.y++;
 			} while (n--);
 			if (!update_all) {
-				SDL_UpdateRect(screen, 0, vertbase[i], width, vertstretch);
+				SDL_RenderPresent(renderer);
 			}
 		}
 	}
@@ -364,7 +369,7 @@ scr_refresh_bk0010(unsigned shift, unsigned full) {
 	cur_width = full;
 	cur_shift = shift;
 	if (update_all) {
-		SDL_Flip(screen);
+		SDL_RenderPresent(renderer);
 	}
 	scr_dirty = 0;
 }
@@ -396,12 +401,11 @@ scr_refresh_bk0011_1(unsigned shift, unsigned full) {
 		dstrect.y = i;
 		if (dirty[physline] | blit_all) {
 			if (do_palette) {
-				SDL_SetPalette(l, SDL_LOGPAL,
-					palettes[req_palette[2*i+(i&1)]], 0, 5);
+				SDL_SetPaletteColors(l->format->palette, palettes[req_palette[2*i+(i&1)]], 0, 5);
 			}
 			SDL_BlitSurface(l, &srcrect, screen, &dstrect);
 			if (!update_all) {
-				SDL_UpdateRect(screen, 0, dstrect.y, width, 1);
+				SDL_RenderPresent(renderer);
 			}
 		}
 	}
@@ -416,7 +420,7 @@ scr_refresh_bk0011_1(unsigned shift, unsigned full) {
 	cur_width = full;
 	cur_shift = shift;
 	if (update_all) {
-		SDL_Flip(screen);
+		SDL_RenderPresent(renderer);
 	}
 	scr_dirty = 0;
 	change_req >>= 1;
@@ -447,12 +451,11 @@ scr_refresh_bk0011_2(unsigned shift, unsigned full) {
 		dstrect.y = i;
 		if (dirty[physline] | blit_all) {
 			if (do_palette) {
-				SDL_SetPalette(l, SDL_LOGPAL,
-					palettes[req_palette[2*j+(i&1)]], 0, 5);
+				SDL_SetPaletteColors(l->format->palette, palettes[req_palette[2*j+(i&1)]], 0, 5);
 			}
 			SDL_BlitSurface(l, &srcrect, screen, &dstrect);
 			if (!update_all) {
-				SDL_UpdateRect(screen, 0, dstrect.y, width, 1);
+				SDL_RenderPresent(renderer);
 			}
 		}
 	}
@@ -467,7 +470,7 @@ scr_refresh_bk0011_2(unsigned shift, unsigned full) {
 	cur_width = full;
 	cur_shift = shift;
 	if (update_all) {
-		SDL_Flip(screen);
+		SDL_RenderPresent(renderer);
 	}
 	scr_dirty = 0;
 	change_req >>= 1;

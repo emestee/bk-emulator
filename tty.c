@@ -19,9 +19,8 @@
  */
 
 #include "defines.h"
-#include "SDL/SDL.h"
-#include "SDL/SDL_keysym.h"
-#include "SDL/SDL_events.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_events.h"
 #include <ctype.h>
 #include <libintl.h>
 #define _(String) gettext (String)
@@ -49,7 +48,7 @@ d_word tty_data;
 d_word tty_scroll = 1330;
 unsigned char key_pressed = 0100;
 flag_t timer_intr_enabled = 0;
-int special_keys[SDLK_LAST], shifted[256];
+int special_keys[SDL_NUM_SCANCODES], shifted[256];
 
 static tty_pending_int = 0;
 extern unsigned long pending_interrupts;
@@ -57,45 +56,45 @@ tty_open()
 {
     int i;
     /* initialize the keytables */
-    for (i = 0; i < SDLK_LAST; i++) {
+    for (i = 0; i < SDL_NUM_SCANCODES; i++) {
 	special_keys[i] = -1;
     }
-    special_keys[SDLK_BACKSPACE] = 030;
-    special_keys[SDLK_TAB] = 011;
-    special_keys[SDLK_RETURN] = 012;
-    special_keys[SDLK_CLEAR] = 014;        /* sbr */
+    special_keys[SDL_SCANCODE_BACKSPACE] = 030;
+    special_keys[SDL_SCANCODE_TAB] = 011;
+    special_keys[SDL_SCANCODE_RETURN] = 012;
+    special_keys[SDL_SCANCODE_CLEAR] = 014;        /* sbr */
 
-    for (i = SDLK_NUMLOCK; i <= SDLK_COMPOSE; i++)
+    for (i = SDL_SCANCODE_NUMLOCKCLEAR; i <= SDL_SCANCODE_APPLICATION; i++)
 	special_keys[i] = TTY_NOTHING;
 
-    special_keys[SDLK_SCROLLOCK] = TTY_SWITCH;
-    special_keys[SDLK_LSUPER] = TTY_AR2;
-    special_keys[SDLK_LALT] = TTY_AR2;
-    special_keys[SDLK_ESCAPE] = TTY_STOP;
+    special_keys[SDL_SCANCODE_SCROLLLOCK] = TTY_SWITCH;
+    special_keys[SDL_SCANCODE_LGUI] = TTY_AR2;
+    special_keys[SDL_SCANCODE_LALT] = TTY_AR2;
+    special_keys[SDL_SCANCODE_ESCAPE] = TTY_STOP;
 
-    special_keys[SDLK_DELETE] = -1;
-    special_keys[SDLK_LEFT] = 010;
-    special_keys[SDLK_UP] = 032;
-    special_keys[SDLK_RIGHT] = 031;
-    special_keys[SDLK_DOWN] = 033;
-    special_keys[SDLK_HOME] = 023;         /* vs */
-    special_keys[SDLK_PAGEUP] = -1;     /* PgUp */
-    special_keys[SDLK_PAGEDOWN] = -1;    /* PgDn */
-    special_keys[SDLK_END] = -1;
-    special_keys[SDLK_INSERT] = -1;
-    special_keys[SDLK_BREAK] = TTY_STOP;
-    special_keys[SDLK_F1] = 0201;          /* povt */
-    special_keys[SDLK_F2] = 003;           /* kt */
-    special_keys[SDLK_F3] = 0213;          /* -|--> */
-    special_keys[SDLK_F4] = 026;           /* |<--- */
-    special_keys[SDLK_F5] = 027;           /* |---> */
-    special_keys[SDLK_F6] = 0202;          /* ind su */
-    special_keys[SDLK_F7] = 0204;          /* blk red */
-    special_keys[SDLK_F8] = 0200;          /* shag */
-    special_keys[SDLK_F9] = 014;           /* sbr */
-    special_keys[SDLK_F10] = TTY_STOP;
-    special_keys[SDLK_F11] = TTY_RESET;
-    special_keys[SDLK_F12] = TTY_DOWNLOAD;
+    special_keys[SDL_SCANCODE_DELETE] = -1;
+    special_keys[SDL_SCANCODE_LEFT] = 010;
+    special_keys[SDL_SCANCODE_UP] = 032;
+    special_keys[SDL_SCANCODE_RIGHT] = 031;
+    special_keys[SDL_SCANCODE_DOWN] = 033;
+    special_keys[SDL_SCANCODE_HOME] = 023;         /* vs */
+    special_keys[SDL_SCANCODE_PAGEUP] = -1;     /* PgUp */
+    special_keys[SDL_SCANCODE_PAGEDOWN] = -1;    /* PgDn */
+    special_keys[SDL_SCANCODE_END] = -1;
+    special_keys[SDL_SCANCODE_INSERT] = -1;
+    special_keys[SDL_SCANCODE_PAUSE] = TTY_STOP;
+    special_keys[SDL_SCANCODE_F1] = 0201;          /* povt */
+    special_keys[SDL_SCANCODE_F2] = 003;           /* kt */
+    special_keys[SDL_SCANCODE_F3] = 0213;          /* -|--> */
+    special_keys[SDL_SCANCODE_F4] = 026;           /* |<--- */
+    special_keys[SDL_SCANCODE_F5] = 027;           /* |---> */
+    special_keys[SDL_SCANCODE_F6] = 0202;          /* ind su */
+    special_keys[SDL_SCANCODE_F7] = 0204;          /* blk red */
+    special_keys[SDL_SCANCODE_F8] = 0200;          /* shag */
+    special_keys[SDL_SCANCODE_F9] = 014;           /* sbr */
+    special_keys[SDL_SCANCODE_F10] = TTY_STOP;
+    special_keys[SDL_SCANCODE_F11] = TTY_RESET;
+    special_keys[SDL_SCANCODE_F12] = TTY_DOWNLOAD;
     for (i = 0; i < 256; i++) {
 	shifted[i] = i;
     }
@@ -289,19 +288,20 @@ stop_key() {
 
 static int ar2 = 0;
 tty_keyevent(SDL_Event * pev) {
-	int k, c;
+	int k, c, scan_code;
 	k = pev->key.keysym.sym;
+	scan_code = pev->key.keysym.scancode;
 	if (SDLK_UNKNOWN == k) {
 	    return;
 	}
 	if(pev->type == SDL_KEYUP) {
 	    key_pressed = 0100;
-	    if (special_keys[k] == TTY_AR2) ar2 = 0;
+	    if (special_keys[scan_code] == TTY_AR2) ar2 = 0;
 	    return;
 	}
 	/* modifier keys handling */
-	if (special_keys[k] != -1) {
-	    switch (special_keys[k]) {
+	if (special_keys[scan_code] != -1) {
+	    switch (special_keys[scan_code]) {
 	    case TTY_STOP:
 		stop_key();     /* STOP is NMI */
 		return;
@@ -331,9 +331,13 @@ tty_keyevent(SDL_Event * pev) {
 		scr_switch(0, 0);
 		return;
 	    default:
-		c = special_keys[k];
+		c = special_keys[scan_code];
 	    }
 	} else {
+		if (k > 255) {
+			// non character key
+			return;
+		}
 	    // Keysym follows ASCII
 	    c = k;
 	    if ((pev->key.keysym.mod & KMOD_CAPS) && isalpha(c)) {
@@ -370,23 +374,25 @@ tty_recv()
     /* fprintf(stderr, "Polling events..."); */
     while (SDL_PollEvent(&ev)) {
 	extern void mouse_event(SDL_Event * pev);
-
 	    switch (ev.type) {
 	    case SDL_KEYDOWN: case SDL_KEYUP:
 		tty_keyevent(&ev);
 		break;
-	    case SDL_VIDEOEXPOSE:
-	    case SDL_ACTIVEEVENT:
-		/* the visibility changed */
-		scr_dirty  = 256;
-		break;
+		case SDL_WINDOWEVENT: {
+			switch (ev.window.event) {
+			case SDL_WINDOWEVENT_RESIZED:
+				scr_switch(ev.window.data1, ev.window.data2);
+				break;
+			case SDL_WINDOWEVENT_EXPOSED:
+				 /* the visibility changed */
+				 scr_dirty  = 256;
+				 break;
+			}
+		}
 	    case SDL_MOUSEBUTTONDOWN:
 	    case SDL_MOUSEBUTTONUP:
 	    case SDL_MOUSEMOTION:
 		mouse_event(&ev);
-		break;
-	    case SDL_VIDEORESIZE:
-		scr_switch(ev.resize.w, ev.resize.h);
 		break;
 	    case SDL_QUIT:
 		exit(0);
