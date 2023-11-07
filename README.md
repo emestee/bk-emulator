@@ -57,11 +57,10 @@ Unfortunately, most if not all of these things are in Russian.
 Compilation and use
 -------------------
 
-This is very old software, but as all good C code, it works ten and twenty years thereafter. I have successfully compiled it,
-booted a BK-0010.01 machine and played a game under Ubuntu 13.05, Linux 3.8.5 and libSDL 1.2.
+This is very old software, but as all good C code, it works ten and twenty years thereafter. It has been recently modified to run on SDL2 and therefore should compile 
+without issues on modern machines.
 
-* Make sure libsdl1.2 and its -dev packages are installed
-* Edit the Makefile to correct the path to your libSDL.so 
+* Make sure libsdl2 and its -dev packages are installed
 * Run `make`
 * Run `./bk -?` for overview of emulation modes
 
