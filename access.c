@@ -87,27 +87,41 @@ pdp_qmap qmap_bk[] = {
 	{ 0, 0, 0, 0, 0, 0 }
 };
 
-tcons_read(c_addr a, d_word *d) {
+int tcons_read(c_addr a, d_word *d) {
 	switch (a & 077) {
 	case 064:
 		*d = 0200;
 		break; // done
 	case 066:
-		fprintf(stderr, "Reading %06o\n", a);
+		fprintf(stderr, "Reading %06lo\n", a);
 		*d = 0;
 		break; // nothing
 	}
 	return OK;
 }
 
-tcons_write(c_addr a, d_word d) {
+int tcons_write(c_addr a, d_word d) {
 	switch (a & 077) {
 	case 064:
-		fprintf(stderr, "Writing %06o: %06o\n", a, d);
+		fprintf(stderr, "Writing %06lo: %06o\n", a, d);
 		break;
 	case 066:
-		// fprintf(stderr, "Writing %03o to console port %06o\n", d, a);
-		if (d != '\n' && d < 32 || d >= 127)
+		if ((d != '\n' && d < 32) || d >= 127)
+		fprintf(stderr, "<%o>", d);
+		else
+		fprintf(stderr, "%c", d);
+		break;
+	}
+	return OK;
+}
+
+int tcons_bwrite(c_addr a, d_byte d) {
+	switch (a & 077) {
+	case 064:
+		fprintf(stderr, "Writing %06lo: %06o\n", a, d);
+		break;
+	case 066:
+		if ((d != '\n' && d < 32) || d >= 127)
 		fprintf(stderr, "<%o>", d);
 		else
 		fprintf(stderr, "%c", d);
@@ -119,8 +133,8 @@ tcons_write(c_addr a, d_word d) {
 pdp_qmap qmap_terak[] = {
 	{ TERAK_DISK_REG, TERAK_DISK_SIZE, tdisk_init, tdisk_read,
 	tdisk_write, tdisk_bwrite },
-	{ 0177564, 4, q_null, tcons_read, tcons_write, tcons_write }, 
-	{ 0177764, 4, q_null, tcons_read, tcons_write, tcons_write }, 
+	{ 0177564, 4, q_null, tcons_read, tcons_write, tcons_bwrite },
+	{ 0177764, 4, q_null, tcons_read, tcons_write, tcons_bwrite },
 	{ 0177744, 2, q_null, port_read, port_write, port_bwrite },
 	{ 0177560, 2, q_null, port_read, port_write, port_bwrite },
 	{ 0173000, 0200, q_null, terak_read, q_err, q_errb },
@@ -156,22 +170,24 @@ void plug_bkplip() { qmap[0] = q_bkplip; }
 
 /* When nothing is connected to the port */
 int port_read(c_addr a, d_word *d) {
+   (void)a;
 	*d = 0;		/* pulldown */
-	fprintf(stderr, "Reading port %06o\n", a);
 	return OK;
 }
 
 int port_write(c_addr a, d_word d) {
-	fprintf(stderr, "Writing %06o to port %06o\n", d, a);
+   (void)a;
+   (void)d;
 	return OK;	/* goes nowhere */
 }
 
 int port_bwrite(c_addr a, d_byte d) {
-	fprintf(stderr, "Writing %03o to port %06o\n", d, a);
+   (void)a;
+   (void)d;
 	return OK;	/* goes nowhere */
 }
 
-secret_read(addr, word)
+int secret_read(addr, word)
 c_addr addr;
 d_word *word;
 {
@@ -193,12 +209,12 @@ d_word *word;
 }
 
 int secret_write(c_addr a, d_word d) {
-	fprintf(stderr, "Writing %o to %o\n", d, a);
+	fprintf(stderr, "Writing %o to %lo\n", d, a);
 	return OK;	/* goes nowhere */
 }
 
 int secret_bwrite(c_addr a, d_byte d) {
-	fprintf(stderr, "Writing %o to %o\n", d, a);
+	fprintf(stderr, "Writing %o to %lo\n", d, a);
 	return OK;	/* goes nowhere */
 }
 
@@ -230,7 +246,7 @@ d_word *word;
 			return (qmap[i].rfunc)( addr, word );
 		}
 	}
-	fprintf(stderr, _("Illegal read address %06o:"), addr);
+	fprintf(stderr, _("Illegal read address %06lo:"), addr);
 	return BUS_ERROR;
 }
 
@@ -353,7 +369,7 @@ d_word word;
 			return (qmap[i].wfunc)( addr, word );
 		}
 	}
-	fprintf(stderr, _("@%06o Illegal write address %06o:"), pdp.regs[PC], addr);
+	fprintf(stderr, _("@%06o Illegal write address %06lo:"), pdp.regs[PC], addr);
 	return BUS_ERROR;
 }
 
@@ -511,12 +527,12 @@ int q_null()
 
 int q_err(c_addr x, d_word y)
 {
-	fprintf(stderr, _("Writing to ROM addr %06o:"), x);
+	fprintf(stderr, _("Writing to ROM addr %06lo:"), x);
 	return BUS_ERROR;
 }
 int q_errb(c_addr x, d_byte y)
 {
-	fprintf(stderr, _("Writing byte to ROM addr %06o:"), x);
+	fprintf(stderr, _("Writing byte to ROM addr %06lo:"), x);
 	return BUS_ERROR;
 }
 

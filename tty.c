@@ -397,7 +397,6 @@ tty_recv()
 	    case SDL_QUIT:
 		exit(0);
 	    default:;
-		fprintf(stderr, _("Unexpected event %d\n"), ev.type);
 	    }
     }
     /* fprintf(stderr, "done\n"); */

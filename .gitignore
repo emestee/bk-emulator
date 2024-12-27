@@ -8,3 +8,6 @@ pngtorba
 irps.log
 everything
 /.idea
+*.BIN
+*.OV?
+*.DAT
