@@ -184,7 +184,7 @@ by the environment variable BK_PATH.\n"), romdir );
 		TICK_RATE = 3000000;
 		break;
 	default: /* Unknown ROM configuration */
-		fprintf( stderr, _("Unknown BK model. Bailing out.\n"), argv[0] );
+		fprintf( stderr, _("Unknown BK model. Bailing out.\n"));
 		exit( -1 );
 	}
 	
@@ -407,7 +407,7 @@ run( int flag )
 		speed = (((double)p->total) / expired );
 	else
 		speed = 0.0;
-	fprintf( stderr, _("Instructions executed: %d\n"), p->total );
+	fprintf( stderr, _("Instructions executed: %lud\n"), p->total );
 	fprintf( stderr, _("Simulation rate: %.5g instructions per second\n"),
 		speed );
 	fprintf( stderr, _("BK speed: %.5g instructions per second\n"),
@@ -466,7 +466,7 @@ int flag;
 		if (traceflag) {
 			extern double io_sound_count;
 			disas(p->regs[PC], buf);
-			if (tracefile) fprintf(tracefile, "%s\t%s\n", buf, state(p));
+			if (tracefile) fprintf(tracefile, "%s\t%d\n", buf, state(p));
 			else printf("%s\n", buf);
 		}
 		result = ll_word( p, p->regs[PC], &p->ir );
@@ -580,7 +580,7 @@ int flag;
 		     * by SDL. If the sound is on, sound buffering
 		     * provides synchronization.
 		     */
-		    if (!fullspeed && !nflag) {
+		    if (!fullspeed) {
 		    	double cur_delta =
 				ticks - SDL_GetTicks() * (TICK_RATE/1000.0);
 			if (cur_delta - timing_delta > TICK_RATE/100) {
@@ -734,26 +734,26 @@ char *monitor11help = _("BK0011M BOS commands:\n\n\
 
     switch( bkmodel ) { /* Make the hints model-specific */
     case 0: /* BK0010 */
-	fprintf(stderr, monitor10help);
+	fprintf(stderr, "%s", monitor10help);
         fprintf(stderr, _(" 'T' - Run built-in tests.\n\n"));
         fprintf(stderr, _("Type 'P M' to quit FOCAL and get the MONITOR prompt.\n"));
         fprintf(stderr, _("Type 'P T' to enter the test mode. 1-5 selects a test.\n\n"));
     break;
     case 1: /* BK0010.01 */
-	fprintf(stderr, monitor10help);
+	fprintf(stderr, "%s", monitor10help);
         fprintf(stderr, _("\nType 'MO' to quit BASIC VILNIUS 1986 and get the MONITOR prompt.\n\n"));
     break;
     case 2: /* BK0010.01+FDD */
-	fprintf(stderr, monitor10help);
+	fprintf(stderr, "%s", monitor10help);
         fprintf(stderr, _("\nType 'S160000' to boot from floppy A:.\n"));
         fprintf(stderr, _("The BASIC ROM is disabled.\n\n"));
     break;
     case 3: /* BK0011M+FDD */
-	fprintf(stderr, monitor11help);
+	fprintf(stderr, "%s", monitor11help);
         fprintf(stderr, _("\nBK-0011M boots automatically from the first floppy drive available.\n\n"));
     break;
     case 4: /* BK0011M */
-	fprintf(stderr, monitor11help);
+	fprintf(stderr, "%s", monitor11help);
     break;
     }
 }

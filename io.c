@@ -49,10 +49,9 @@ d_word word;
 		pagereg_write(word);
 		return OK;
 	}
-	io_sound_val = word & 0300;
+	io_sound_val = (word & 0100) != 0;
 	if (io_sound_val != oldval) {
-		if (fullspeed) io_sound_count = ticks;
-		    io_sound_age = 0;
+     if (fullspeed) io_sound_count = ticks;
 	}
 	/* status, value */
 	tape_write((word >> 7) & 1, (word >> 6) & 1);
@@ -66,10 +65,9 @@ io_bwrite(c_addr addr, d_byte byte) {
 	d_word offset = addr - IO_REG;
 	unsigned oldval = io_sound_val;
 	if (offset == 0) {
-	    io_sound_val = byte & 0300;
+	    io_sound_val = (byte & 0100) != 0;
 	    if (io_sound_val != oldval) {
 		    if (fullspeed) io_sound_count = ticks;
-		    io_sound_age = 0;
 	    }
 	    tape_write((byte >> 7) & 1, (byte >> 6) & 1);
 	    if (telegraph_enabled) {

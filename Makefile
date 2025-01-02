@@ -74,7 +74,7 @@ icon.c: pngtorgba bk.png
 	if [ ! -s icon.c ] ; then ./pngtorgba bk.png > icon.c ; fi
 
 $(TARGET):	$(OBJS)
-	$(LD) $(CFLAGS) -o $(TARGET) $(OBJS) /usr/lib/x86_64-linux-gnu/libSDL.so $(GETTEXT_LIB) -lpthread
+	$(LD) $(CFLAGS) -o $(TARGET) $(OBJS) $(shell pkg-config --libs sdl2) $(GETTEXT_LIB) -lpthread
 
 readtape: readtape.c
 	$(CC) $(CFLAGS) -o readtape $(GETTEXT_LIB) readtape.c
