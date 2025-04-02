@@ -2,6 +2,8 @@
 #define SYNCH 1000
 #include <libintl.h>
 #include <locale.h>
+#include <stdlib.h>
+#include <string.h>
 #define _(String) gettext (String)
 
 #define putSI   beep(1, SYNCH), beep(0, SYNCH)
