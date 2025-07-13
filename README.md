@@ -85,8 +85,7 @@ The following is supposed to work, but sometimes doesn't:
 When the emulation is running, you can issue a Ctrl-C in the emulator's console. This will stop the emulation and drop
 you into the emulator's debugger. To load a game from a binary file (assuming you have one, none are distributed here), do:
 
-`l <filename>` (the emulator will look for the file in /usr/share/bk)
-
+`l <filename>`
 `g 1000`
 
 
