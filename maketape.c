@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #define SYNCH 1000
 #include <libintl.h>
 #include <locale.h>
