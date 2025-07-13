@@ -57,8 +57,7 @@ Unfortunately, most if not all of these things are in Russian.
 Compilation and use
 -------------------
 
-This is very old software, but as all good C code, it works ten and twenty years thereafter. It has been recently modified to run on SDL2 and therefore should compile 
-without issues on modern machines.
+For instructions on how to compile on Mac please read [MAC-BUILD.md](./MAC-BUILD.md)
 
 * Make sure libsdl2 and its -dev packages are installed
 * Run `make`
@@ -68,6 +67,21 @@ For instance, to run BK-0010.01 emulation, execute
 
 `./bk -1 -c`
 
+Some games can be downloaded [here](http://bk0010.narod.ru/). The original authors generally do not object to redistribution of their work, as most of it was written while copyright law in Russia was non-existent.
+
+Games are published in two binary formats that are slightly different: the `bkread` format (as is the case with the above website) and the raw tape format. The `bkread` format
+embeds a BK-internal file name that this emulator does not understand. Use the script `convert_bkread.py` to check and convert binary files.
+
+To load a game binary from within the emulator, do:
+
+* Type `mon` and press enter in the BASIC shell, this will throw you into the monitor mode
+* Type `m` and press enter 
+* Input the file name, case-sensitive, in the current working directory. If "ОШИБКА" is displayed, check the file name 
+or try converting the file
+* After the file is loaded and you receive a prompt, type `s` and press enter
+
+The following is supposed to work, but sometimes doesn't:
+
 When the emulation is running, you can issue a Ctrl-C in the emulator's console. This will stop the emulation and drop
 you into the emulator's debugger. To load a game from a binary file (assuming you have one, none are distributed here), do:
 
@@ -75,6 +89,5 @@ you into the emulator's debugger. To load a game from a binary file (assuming yo
 
 `g 1000`
 
-For instructions on how to compile on Mac use this link: [MAC-BUILD.md](./MAC-BUILD.md)
 
-Please feel free to contact me if you are curious about this. I will do my best to try and answer your questions.
+You can also press F12 when the emulator is running and input a binary file name in the emulator console window.
